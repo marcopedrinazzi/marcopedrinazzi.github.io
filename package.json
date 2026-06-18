@@ -6,9 +6,9 @@
 	"scripts": {
 		"build": "npx @11ty/eleventy",
 		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
-		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
+		"build-ghpages": "npx @11ty/eleventy",
 		"start": "npx @11ty/eleventy --serve --quiet",
-		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
+		"start-ghpages": "npx @11ty/eleventy --serve --quiet",
 		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
 		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
 		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
@@ -38,7 +38,6 @@
 		"@11ty/eleventy": "^3.1.6",
 		"@11ty/eleventy-img": "^6.0.4",
 		"@11ty/eleventy-navigation": "^1.0.5",
-		"@11ty/eleventy-plugin-rss": "^3.0.0",
 		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
 		"cross-env": "^10.1.0",
 		"luxon": "^3.7.2",

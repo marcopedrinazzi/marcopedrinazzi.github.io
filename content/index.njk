@@ -3,21 +3,15 @@ const eleventyNavigation = {
 	key: "Home",
 	order: 1
 };
-
-const numberOfLatestPostsToShow = 3;
 ---
 {% set postsCount = collections.posts | length %}
-{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h1>
+<h1>Research & Experiments</h1>
 
-{% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
+<p>A collection of my security research and experiments. Some of this work is associated with the company I work for, and some comes from independent research I do in my own time.</p>
+
+{% set postslist = collections.posts %}
 {% set postslistCounter = postsCount %}
 {% include "postslist.njk" %}
-
-{% set morePosts = postsCount - numberOfLatestPostsToShow %}
-{% if morePosts > 0 %}
-<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
-{% endif %}
 
 {# List every content page in the project #}
 {#
