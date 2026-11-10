@@ -12,24 +12,31 @@
 	}
 
 	document.addEventListener("DOMContentLoaded", () => {
-		const picker = document.getElementById("theme-select");
-		picker.value = theme;
-		picker.addEventListener("change", () => {
-			if (picker.value === "system") {
+		const button = document.getElementById("theme-toggle");
+		const nextTheme = { system: "light", light: "dark", dark: "system" };
+		function updateLabel() {
+			button.textContent = `Theme: ${theme}`;
+			button.setAttribute("aria-label", `Theme: ${theme}. Switch to ${nextTheme[theme]} theme.`);
+		}
+		updateLabel();
+		button.addEventListener("click", () => {
+			theme = nextTheme[theme];
+			if (theme === "system") {
 				delete root.dataset.theme;
 			} else {
-				root.dataset.theme = picker.value;
+				root.dataset.theme = theme;
 			}
+			updateLabel();
 			try {
-				if (picker.value === "system") {
+				if (theme === "system") {
 					localStorage.removeItem("theme");
 				} else {
-					localStorage.setItem("theme", picker.value);
+					localStorage.setItem("theme", theme);
 				}
 			} catch {
 				// Keep the selection usable when it cannot be saved.
 			}
 		});
-		document.getElementById("theme-control").hidden = false;
+		button.hidden = false;
 	});
 })();

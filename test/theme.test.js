@@ -7,14 +7,19 @@ const script = readFileSync(new URL("../_includes/theme.js", import.meta.url), "
 
 function page(storage = new Map()) {
 	const root = { dataset: {} };
-	const control = { hidden: true };
-	const picker = { value: "system", addEventListener: (_, handler) => { picker.change = handler; } };
+	const button = {
+		hidden: true,
+		textContent: "",
+		attributes: {},
+		setAttribute(name, value) { this.attributes[name] = value; },
+		addEventListener(event, handler) { this[event] = handler; },
+	};
 	let ready;
 	runInNewContext(script, {
 		document: {
 			documentElement: root,
 			addEventListener: (_, handler) => { ready = handler; },
-			getElementById: id => id === "theme-select" ? picker : control,
+			getElementById: () => button,
 		},
 		localStorage: {
 			getItem: key => storage.get(key),
@@ -22,7 +27,7 @@ function page(storage = new Map()) {
 			removeItem: key => storage.delete(key),
 		},
 	});
-	return { root, control, picker, ready };
+	return { root, button, ready };
 }
 
 test("restores light and dark before the page is ready", () => {
@@ -30,8 +35,8 @@ test("restores light and dark before the page is ready", () => {
 		const view = page(new Map([["theme", theme]]));
 		assert.equal(view.root.dataset.theme, theme);
 		view.ready();
-		assert.equal(view.picker.value, theme);
-		assert.equal(view.control.hidden, false);
+		assert.equal(view.button.textContent, `Theme: ${theme}`);
+		assert.equal(view.button.hidden, false);
 	}
 });
 
@@ -40,7 +45,7 @@ test("missing or invalid preferences follow the system", () => {
 		const view = page(new Map([["theme", theme]]));
 		view.ready();
 		assert.equal(view.root.dataset.theme, undefined);
-		assert.equal(view.picker.value, "system");
+		assert.equal(view.button.textContent, "Theme: system");
 	}
 });
 
@@ -48,9 +53,9 @@ test("switching persists across pages and System clears the override", () => {
 	const storage = new Map();
 	const view = page(storage);
 	view.ready();
-	for (const theme of ["dark", "light", "system"]) {
-		view.picker.value = theme;
-		view.picker.change();
+	for (const theme of ["light", "dark", "system"]) {
+		view.button.click();
+		assert.equal(view.button.textContent, `Theme: ${theme}`);
 		const expected = theme === "system" ? undefined : theme;
 		assert.equal(view.root.dataset.theme, expected);
 		assert.equal(storage.get("theme"), expected);
@@ -62,9 +67,19 @@ test("switching still works when browser storage is blocked", () => {
 	const blocked = () => { throw new Error("Storage blocked"); };
 	const view = page({ get: blocked, set: blocked, delete: blocked });
 	view.ready();
-	for (const theme of ["dark", "light", "system"]) {
-		view.picker.value = theme;
-		assert.doesNotThrow(() => view.picker.change());
+	for (const theme of ["light", "dark", "system"]) {
+		assert.doesNotThrow(() => view.button.click());
 		assert.equal(view.root.dataset.theme, theme === "system" ? undefined : theme);
+	}
+});
+
+
+test("the button explains its next action and cycles from a saved preference", () => {
+	for (const [current, next] of [["system", "light"], ["light", "dark"], ["dark", "system"]]) {
+		const view = page(new Map([["theme", current]]));
+		view.ready();
+		assert.equal(view.button.attributes["aria-label"], `Theme: ${current}. Switch to ${next} theme.`);
+		view.button.click();
+		assert.equal(view.root.dataset.theme, next === "system" ? undefined : next);
 	}
 });
