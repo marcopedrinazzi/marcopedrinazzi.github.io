@@ -1,6 +1,6 @@
 ---
-title: "Tales of an Ollama Honeypot (Part 2): LLMJacking"
-description: "Analysis of an observed LLMJacking attack against an exposed Ollama honeypot"
+title: "Tales of an Ollama Honeypot (Part 5): GHOST Jailbreak Aims to Steal Secrets and Drain Crypto Wallets"
+description: "Analysis of GHOST, a new jailbreak prompt used in the wild and captured by the honeypot"
 date: 2026-11-06
 tags:
   - InTheCyber
