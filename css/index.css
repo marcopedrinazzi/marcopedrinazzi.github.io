@@ -6,6 +6,8 @@
 
 /* Theme colors */
 :root {
+	color-scheme: light;
+	--color-message-box: #e8eddf;
 	--color-gray-20: #d8ddcf;
 	--color-gray-50: #788575;
 	--color-gray-90: #283b30;
@@ -21,7 +23,9 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme]) {
+		color-scheme: dark;
+		--color-message-box: #283d2e;
 		--color-gray-20: #3b5042;
 		--color-gray-50: #9eae9e;
 		--color-gray-90: #eeeade;
@@ -35,6 +39,21 @@
 	}
 }
 
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+	--color-message-box: #283d2e;
+	--color-gray-20: #3b5042;
+	--color-gray-50: #9eae9e;
+	--color-gray-90: #eeeade;
+
+	/* --text-color is assigned to --color-gray-_ above */
+	--text-color-link: #a6d5ac;
+	--text-color-link-active: #cde8c6;
+	--text-color-link-visited: #b9c6a3;
+
+	--background-color: #17261d;
+}
 
 /* Global stylesheet */
 * {
@@ -207,6 +226,17 @@ header {
 }
 .home-link:link:not(:hover) {
 	text-decoration: none;
+}
+
+/* Theme selector */
+#theme-select {
+	margin-inline-start: .25em;
+	padding: .25em .5em;
+	font: inherit;
+	color: var(--text-color);
+	background-color: var(--background-color);
+	border: 1px solid var(--color-gray-50);
+	border-radius: .25em;
 }
 
 /* Nav */

@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{{ title or metadata.title }}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
+		<script eleventy:ignore>{% include "theme.js" %}</script>
 
 		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
 		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
@@ -53,6 +54,14 @@
 				{%- endfor %}
 				</ul>
 			</nav>
+			<label id="theme-control" hidden>
+				Theme
+				<select id="theme-select">
+					<option value="system">System</option>
+					<option value="light">Light</option>
+					<option value="dark">Dark</option>
+				</select>
+			</label>
 		</header>
 
 		<main id="main">
@@ -64,9 +73,8 @@
 		<footer>
 			<p>
 				{%- for social in metadata.socials %}
-					<a href="{{ social.url }}">{{ social.name }}</a><span aria-hidden="true"> · </span>
+					<a href="{{ social.url }}">{{ social.name }}</a>{% if not loop.last %}<span aria-hidden="true"> · </span>{% endif %}
 				{%- endfor %}
-				<em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em>
 			</p>
 		</footer>
 
