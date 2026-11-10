@@ -1,7 +1,7 @@
 ---
 title: "Tales of an Ollama Honeypot (Part 2): LLMJacking"
 description: "Analysis of an observed LLMJacking attack against an exposed Ollama honeypot"
-date: 2026-05-11
+date: 2026-11-06
 tags:
   - InTheCyber
   - AI
