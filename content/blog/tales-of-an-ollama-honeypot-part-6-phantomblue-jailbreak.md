@@ -1,5 +1,5 @@
 ---
-title: "Tales of an Ollama Honeypot (part 6): PhantomBlue Jailbreak"
+title: "Tales of an Ollama Honeypot (Part 6): PhantomBlue Jailbreak"
 description: "Analysis of PhantomBlue, a new jailbreak prompt used in the wild and captured by the honeypot"
 date: 2026-11-12
 tags:
