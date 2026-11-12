@@ -1,0 +1,53 @@
+/* Keep the Prism layout, with colors suited to the forest palette. */
+code[class*="language-"],
+pre[class*="language-"] {
+	color: var(--text-color);
+	text-shadow: none;
+}
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #18221c;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: var(--color-gray-50);
+}
+.token.punctuation,
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: var(--text-color);
+}
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #e4b49a;
+}
+.token.boolean,
+.token.number,
+.token.regex,
+.token.important {
+	color: #e5ba86;
+}
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #bdd0a5;
+}
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name,
+.token.keyword {
+	color: var(--text-color-link);
+}
